@@ -23,7 +23,7 @@ jobs:
       PYPI_UPLOAD: true  # true or false
       TESTPYPI_UPLOAD: false
       CIBW_BUILD: ${{ matrix.python }}-*
-      CIBW_ARCHS_LINUX: "x86_64 aarch64"
+      CIBW_ARCHS_LINUX: "aarch64"
       CIBW_ARCHS_MACOS: "x86_64 arm64"
       # No support for pypy, musl, Win32 for 3.10+
       CIBW_SKIP: "pp* *-musllinux_x86_64 cp310-win32 *-musllinux_aarch64"
