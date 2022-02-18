@@ -66,6 +66,7 @@ jobs:
           path: wheelhouse/
 
   test_wheels_aarch64:
+    needs: [build_wheels]
     name: Test ${{ matrix.os }}, Python ${{ matrix.python }}
     runs-on: ${{ matrix.os }}
     defaults:
