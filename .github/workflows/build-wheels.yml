@@ -75,7 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ["cp37", "cp38", "cp39", "cp310"]
+        python: [cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
         os: [ubuntu-20.04]
     env:
       PYPI_UPLOAD: true  # true or false
