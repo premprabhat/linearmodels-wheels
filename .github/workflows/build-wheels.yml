@@ -80,7 +80,7 @@ jobs:
     env:
       PYPI_UPLOAD: true  # true or false
       TESTPYPI_UPLOAD: false
-      py: /opt/python/${{ matrix.pyver }}/bin/python
+      py: /opt/python/${{ matrix.python }}/bin/python
       img: quay.io/pypa/manylinux2014_aarch64
 
     steps:
