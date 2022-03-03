@@ -17,13 +17,13 @@ jobs:
       fail-fast: false
       matrix:
         python: ["cp37", "cp38", "cp39", "cp310"]
-        os: [ubuntu-20.04, windows-2019, macOS-10.15]
+        os: [ubuntu-20.04]
     env:
       BUILD_COMMIT: "v4.25"  # main or a specific version, e.g., v4.25
       PYPI_UPLOAD: true  # true or false
       TESTPYPI_UPLOAD: false
       CIBW_BUILD: ${{ matrix.python }}-*
-      CIBW_ARCHS_LINUX: "x86_64 aarch64"
+      CIBW_ARCHS_LINUX: "aarch64"
       CIBW_ARCHS_MACOS: "x86_64 arm64"
       # No support for pypy, musl, Win32 for 3.10+
       CIBW_SKIP: "pp* *-musllinux_x86_64 cp310-win32 *-musllinux_aarch64"
@@ -66,7 +66,7 @@ jobs:
           path: wheelhouse/
 
   test_wheels_aarch64:
-    #needs: [build_wheels]
+    needs: [build_wheels]
     name: Test ${{ matrix.os }}, Python ${{ matrix.python }}
     runs-on: ${{ matrix.os }}
     defaults:
@@ -98,11 +98,11 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-20.04' }}
         name: Set up QEMU
       
-      #- name: Download artifacts
-      #  uses: actions/download-artifact@v2
-      #  with:
-      #    name: wheelhouse
-      #    path: wheelhouse/
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: wheelhouse
+          path: wheelhouse/
 
       - name: Test aarch64 wheels
         run: |
@@ -110,7 +110,7 @@ jobs:
             ${{ env.img }} \
             bash -exc '${{ env.py }} -m venv .env && \
             source .env/bin/activate && \
-            #pip install wheelhouse/linearmodels-*${{ env.pyver }}-manylinux_2_17_aarch64.manylinux2014_aarch64.whl && \
+            pip install wheelhouse/linearmodels-*${{ env.pyver }}-manylinux_2_17_aarch64.manylinux2014_aarch64.whl && \
             python -c "import linearmodels; linearmodels.test(['-n','2','--skip-slow'])" && \
             deactivate'
       - name: Upload wheels
