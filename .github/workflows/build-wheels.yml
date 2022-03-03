@@ -66,7 +66,7 @@ jobs:
           path: wheelhouse/
 
   test_wheels_aarch64:
-    needs: [build_wheels]
+    #needs: [build_wheels]
     name: Test ${{ matrix.os }}, Python ${{ matrix.python }}
     runs-on: ${{ matrix.os }}
     defaults:
@@ -110,8 +110,8 @@ jobs:
             ${{ env.img }} \
             bash -exc '${{ env.py }} -m venv .env && \
             source .env/bin/activate && \
-            pip install wheelhouse/linearmodels-*${{ env.pyver }}-manylinux_2_17_aarch64.manylinux2014_aarch64.whl && \
-            python -c "import linearmodels; linearmodels.test([\"-n\"',\"2\",\"--skip-slow\"])" && \
+            #pip install wheelhouse/linearmodels-*${{ env.pyver }}-manylinux_2_17_aarch64.manylinux2014_aarch64.whl && \
+            python -c "import linearmodels; linearmodels.test(['-n','2','--skip-slow'])" && \
             deactivate'
       - name: Upload wheels
         if: always()
